@@ -192,8 +192,8 @@ and returns an accumulated list"
 
 
 (erudite:erudite #p"~/quicklisp/local-projects/simple-database/test.md" 
-                 (file-namestring 
-                  #p"/home/neshamon/quicklisp/local-projects/simple-database/simple-db.lisp"))
+                 #p"~/quicklisp/local-projects/simple-database/simple-db.lisp")
+
 \end{code}
                              % ignore macro
 \chapter{Index}
