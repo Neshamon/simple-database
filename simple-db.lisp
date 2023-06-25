@@ -52,3 +52,24 @@ specify their own records."
   (with-open-file (input filename)
     (with-standard-io-syntax 
       (setf *db* (read input)))))
+
+(defun select (select-fn)
+  "Selects a certain record based off of the selector function, select-p"
+  (remove-if-not select-fn *db*))
+
+(defun where (&key title artist rating (ripped nil ripped-p))
+  "Returns records based off of given parameters if they exist, otherwise returns T"
+  #'(lambda (cd)
+      (and
+       (if title 
+           (equal (getf cd :title) title) 
+           t)
+       (if artist 
+           (equal (getf cd :artist) artist) 
+           t)
+       (if rating 
+           (equal (getf cd :ratizng) rating) 
+           t)
+       (if ripped-p 
+           (equal (getf cd :ripped) ripped)
+           t))))
