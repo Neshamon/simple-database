@@ -31,5 +31,11 @@ specify their own records."
    (prompt-read "Title")
    (prompt-read "Artist")
    (or (parse-integer (prompt-read "Rating") :junk-allowed t) 0)
-   (y-or-n-p "Ripped [y/n]")))
+   (y-or-n-p "Ripped [y/n]: ")))
+
+(defun add-cds ()
+  "Adds multiple records to db with user prompts"
+  (loop (add-record (prompt-for-cd))
+        (if (not (y-or-n-p "Another? [y/n]: "))
+            (return))))
 
