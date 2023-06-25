@@ -192,7 +192,8 @@ and returns an accumulated list"
 
 
 (erudite:erudite #p"~/quicklisp/local-projects/simple-database/test.md" 
-                 #p"~/quicklisp/local-projects/simple-database/simple-db.lisp")
+                 #p"~/quicklisp/local-projects/simple-database/simple-db.lisp"
+                 :output :markdown)
 
 \end{code}
                              % ignore macro
