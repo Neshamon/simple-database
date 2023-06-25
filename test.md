@@ -6,7 +6,7 @@
 
 
 
-# Essential Functions
+## Essential Functions
 
 
 
@@ -23,6 +23,12 @@
 ```
 
 
+The first function make-cd is a function that creates records. It takes these values as arguments:
+
+*  title
+*  artist
+*  rating
+*  ripped
 
 
 ```lisp

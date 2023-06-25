@@ -1,12 +1,12 @@
 #|
 
-@title Implementaion of Practical Lisp's Simple Database Project
+@title Implementation of Practical Lisp's Simple Database Project
 @subsection @link{https://gigamonkeys.com/book/practical-a-simple-database.html}{Link here}
 
 @author John Matthews
 @syntax erudite
 
-@section Essential Functions
+@subsection Essential Functions
 
 @ignore
 |#
@@ -28,7 +28,13 @@
 
 #|
 
-
+The first function make-cd is a function that creates records. It takes these values as arguments:
+@list
+@item title
+@item artist
+@item rating
+@item ripped
+@end list
 
 |#
 (defun add-record (cd)

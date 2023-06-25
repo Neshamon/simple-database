@@ -10,7 +10,7 @@
 
 
 
-* Essential Functions
+** Essential Functions
 
 
 #+BEGIN_SRC lisp
@@ -26,6 +26,12 @@
  #+END_SRC
 
 
+The first function make-cd is a function that creates records. It takes these values as arguments:
+
+*  title
+*  artist
+*  rating
+*  ripped
 
 #+BEGIN_SRC lisp
 (defun add-record (cd)
