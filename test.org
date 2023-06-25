@@ -1,4 +1,4 @@
-#+TITLE: Implementaion of Practical Lisp's Simple Database Project
+#+TITLE: Implementation of Practical Lisp's Simple Database Project
 
 #+AUTHOR: John Matthews
 
@@ -28,10 +28,10 @@
 
 The first function make-cd is a function that creates records. It takes these values as arguments:
 
-*  title
-*  artist
-*  rating
-*  ripped
+-  title
+-  artist
+-  rating
+-  ripped
 
 #+BEGIN_SRC lisp
 (defun add-record (cd)
