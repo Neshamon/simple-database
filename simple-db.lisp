@@ -134,5 +134,5 @@ and returns an accumulated list"
 
 (erudite:erudite #p"~/quicklisp/local-projects/simple-database/test.md" 
                  #p"~/quicklisp/local-projects/simple-database/simple-db.lisp"
-                 :output :markdown)
+                 :output-type :markdown)
 

@@ -1,54 +1,13 @@
-\documentclass[11pt,pdflatex,makeidx]{scrbook}   % Book class in 11 points
-\usepackage[margin=0.5in]{geometry}
-\usepackage{color}
-\usepackage{makeidx}
-\usepackage{hyperref}
-
-\usepackage{listings}
-
-\usepackage{hyperref}
-\usepackage{courier}
-
-\hypersetup{colorlinks=true,linkcolor=blue}
-
-\lstloadlanguages{Lisp}
-\lstset{frame=none,language=Lisp,
-  basicstyle=\ttfamily\small,
-  keywordstyle=\color{black}\bfseries,
-  stringstyle=\ttfamily,
-  showstringspaces=false,breaklines}
-\lstnewenvironment{code}{}{}
-
-\parindent0pt  \parskip10pt             % make block paragraphs
-\raggedright                            % do not right justify
-% Note that book class by default is formatted to be printed back-to-back.
-\makeindex
-\begin{document}                        % End of preamble, start of text.
-\title{\bf Implementaion of Practical Lisp's Simple Database Project}
-
-\subtitle{link{https://gigamonkeys.com/book/practical-a-simple-database.html}{Link here}}
-
-
-\author{John Matthews}
-
-\date{\today}                           %   Use current date.
-\frontmatter                            % only in book class (roman page #s)
-\maketitle                              % Print title page.
-\tableofcontents                        % Print table of contents
-\mainmatter                             % only in book class (arabic page #s)
-\long\def\ignore#1{}
 
 
 
 
-\section{Essential Functions}
 
-\index{*db*}
-\label{*db*}
-\index{make-cd}
-\label{make-cd}
+# Essential Functions
 
-\begin{code}
+
+
+```lisp
 
 (defun make-cd (title artist rating ripped)
   "Creates a record"
@@ -58,38 +17,12 @@
   "Creates a db"
   nil)
 
-\end{code}
+```
 
 
 
-\index{where}
-\label{where}
-\index{make-comparisons-list}
-\label{make-comparisons-list}
-\index{make-comparison-expr}
-\label{make-comparison-expr}
-\index{update}
-\label{update}
-\index{where-fn}
-\label{where-fn}
-\index{select}
-\label{select}
-\index{load-db}
-\label{load-db}
-\index{save-db}
-\label{save-db}
-\index{add-cds}
-\label{add-cds}
-\index{prompt-for-cd}
-\label{prompt-for-cd}
-\index{prompt-read}
-\label{prompt-read}
-\index{dump-db}
-\label{dump-db}
-\index{add-record}
-\label{add-record}
 
-\begin{code}
+```lisp
 (defun add-record (cd)
   "Adds a record to the db" 
   (push cd *db*))
@@ -193,10 +126,6 @@ and returns an accumulated list"
 
 (erudite:erudite #p"~/quicklisp/local-projects/simple-database/test.md" 
                  #p"~/quicklisp/local-projects/simple-database/simple-db.lisp"
-                 :output :markdown)
+                 :output-type :markdown)
 
-\end{code}
-                             % ignore macro
-\chapter{Index}
-\printindex
-\end{document}
+```
