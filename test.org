@@ -1,22 +1,16 @@
-#|
+#+TITLE: Implementaion of Practical Lisp's Simple Database Project
 
-@title Implementaion of Practical Lisp's Simple Database Project
-@subtitle link{https://gigamonkeys.com/book/practical-a-simple-database.html}{Link here}
+#+AUTHOR: John Matthews
 
-@author John Matthews
-@syntax erudite
 
-@section Essential Functions
 
-@ignore
-|#
 
-(ql:quickload :erudite)
 
-#|
-@end ignore
 
-|#
+# Essential Functions
+
+
+#+BEGIN_SRC lisp
 
 (defun make-cd (title artist rating ripped)
   "Creates a record"
@@ -26,11 +20,11 @@
   "Creates a db"
   nil)
 
-#|
+ #+END_SRC
 
 
 
-|#
+#+BEGIN_SRC lisp
 (defun add-record (cd)
   "Adds a record to the db" 
   (push cd *db*))
@@ -136,3 +130,4 @@ and returns an accumulated list"
                  #p"~/quicklisp/local-projects/simple-database/simple-db.lisp"
                  :output-type :org)
 
+ #+END_SRC
