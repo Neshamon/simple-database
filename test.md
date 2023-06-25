@@ -1,6 +1,9 @@
 
 
 
+## [Link here](https://gigamonkeys.com/book/practical-a-simple-database.html)
+
+
 
 
 # Essential Functions
@@ -122,10 +125,5 @@ and returns an accumulated list"
   "Compares all values of the accumulated list returned by make-comparisons-list"
   `#'(lambda (cd) (and ,@(make-comparisons-list clause)))) ; The ,@ syntax splices values together within a list
 
-
-
-(erudite:erudite #p"~/quicklisp/local-projects/simple-database/test.md" 
-                 #p"~/quicklisp/local-projects/simple-database/simple-db.lisp"
-                 :output-type :markdown)
 
 ```

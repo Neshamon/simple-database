@@ -1,7 +1,7 @@
 #|
 
 @title Implementaion of Practical Lisp's Simple Database Project
-@subtitle link{https://gigamonkeys.com/book/practical-a-simple-database.html}{Link here}
+@subsection @link{https://gigamonkeys.com/book/practical-a-simple-database.html}{Link here}
 
 @author John Matthews
 @syntax erudite
@@ -131,8 +131,15 @@ and returns an accumulated list"
   `#'(lambda (cd) (and ,@(make-comparisons-list clause)))) ; The ,@ syntax splices values together within a list
 
 
+;; @ignore
 
+;; Org export
 (erudite:erudite #p"~/quicklisp/local-projects/simple-database/test.org" 
                  #p"~/quicklisp/local-projects/simple-database/simple-db.lisp"
                  :output-type :org)
 
+;; Markdown export
+(erudite:erudite #p"~/quicklisp/local-projects/simple-database/test.md" 
+                 #p"~/quicklisp/local-projects/simple-database/simple-db.lisp"
+                 :output-type :markdown)
+;;@end ignore
