@@ -73,3 +73,20 @@ specify their own records."
        (if ripped-p 
            (equal (getf cd :ripped) ripped)
            t))))
+
+(defun update (selector-fn &key title artist rating (ripped nil ripped-p))
+  "Updates db based off of selector-fn by mapping the
+ updated row created by the lambda function to the original db"
+  (setf *db* 
+        (mapcar 
+         #'(lambda (row)
+             (when (funcall selector-fn row)
+               (if title
+                   (setf (getf row :title) title))
+               (if artist 
+                   (setf (getf row :artist) artist))
+               (if rating 
+                   (setf (getf row :rating) rating))
+               (if ripped-p
+                   (setf (getf row :ripped) ripped)))
+             row) *db*)))
