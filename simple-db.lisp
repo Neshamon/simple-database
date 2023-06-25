@@ -40,8 +40,15 @@ specify their own records."
             (return))))
 
 (defun save-db (filename)
+  "Saves db to a file by printing the db to the given filename"
   (with-open-file (out filename
                        :direction :output
                        :if-exists :supersede)
     (with-standard-io-syntax 
       (print *db* out))))
+
+(defun load-db (filename)
+  "Assigns the stream, input, to db"
+  (with-open-file (input filename)
+    (with-standard-io-syntax 
+      (setf *db* (read input)))))
