@@ -1,3 +1,5 @@
+;;;; Implementaion of Practical Lisp's simple database tutorial
+;;;; Link: https://gigamonkeys.com/book/practical-a-simple-database.html
 
 (defun make-cd (title artist rating ripped)
   "Creates a record"
@@ -57,7 +59,7 @@ specify their own records."
   "Selects a certain record based off of the selector function, select-p"
   (remove-if-not select-fn *db*))
 
-(defun where (&key title artist rating (ripped nil ripped-p))
+(defun where-fn (&key title artist rating (ripped nil ripped-p))
   "Returns records based off of given parameters if they exist, otherwise returns T"
   #'(lambda (cd)
       (and
@@ -90,3 +92,19 @@ specify their own records."
                (if ripped-p
                    (setf (getf row :ripped) ripped)))
              row) *db*)))
+
+(defun make-comparison-expr (field value)
+  "Compares the field of cd to the given value"
+  `(equal (getf cd ,field) ,value))
+
+(defun make-comparisons-list (fields)
+  "Compares multiple fields of cd by looping through the fields list 
+and utilizing make-comparison-expr to compare every 2 fields
+and returns an accumulated list"
+  (loop while fields
+        collecting (make-comparison-expr (pop fields) (pop fields))))
+
+(defmacro where (&rest clauses)
+  "Compares all values of the accumulated list returned by make-comparisons-list"
+  `#'(lambda (cd) (and ,@(make-comparisons-list clause)))) ; The ,@ syntax splices values together within a list
+
