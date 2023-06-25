@@ -30,6 +30,6 @@ specify their own records."
   (make-cd
    (prompt-read "Title")
    (prompt-read "Artist")
-   (parse-integer (prompt-read "Rating") :junk-allowed t)
+   (or (parse-integer (prompt-read "Rating") :junk-allowed t) 0)
    (prompt-read "Ripped [y/n]")))
 
