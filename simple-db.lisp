@@ -31,7 +31,7 @@
 
 @subsubsection The Basics
 
-The first function @bold{make-cd} is a function that creates records. It takes these values as arguments:
+The first function @verb{make-cd} is a function that creates records. It takes these values as arguments:
 @list
 @item @verb{title}
 @item @verb{artist}
@@ -47,29 +47,25 @@ let's take a step back for a moment to understand some fundamentals of Common Li
 
 The fundamental building block of everything in Lisp is the S-Expression. S-Expressions, or sexprs,
 are the representation of objects within Common Lisp, and anything and everything in Lisp is an object.
-These sexprs can be represented in two main ways, as an @bold{atom} or a basic type of list
-called a @bold{cons}
+These sexprs can be represented in two main ways, as an @verb{atom} or a basic type of list
+called a @verb{cons}
 
 Now you may be wondering why there are so many parentheses in Common Lisp. The reason why
-is because of the @bold{cons} data structure. Lists in Lisp are delimited by parentheses.
+is because of the @verb{cons} data structure. Lists in Lisp are delimited by parentheses.
 You can verify this by running this function in a sbcl lisp repl:
 
 @code
 CL-USER> (consp (list :title 'title :artist 'artist :rating 'rating :ripped 'ripped))
 @end code
 
-The function @bold{consp} checks if the given value is a cons and returns @bold{T} (Lisp's version of true)
-or @bold{nil} (Lisp's false) otherwise.
+The function @verb{consp} checks if the given value is a cons and returns @verb{T}
+(Lisp's version of true) or @verb{nil} (Lisp's false) otherwise.
 
 Knowing this, it is quite easy to see how everything in Lisp is made up of lists. But where exactly
-does the @bold{cons} list fit in among all these lists? The @bold{cons} list is the most fundamental
-list, it consists of a pair of two values and can be denoted as: 
+does the @verb{cons} list fit in among all these lists? The @verb{cons} list is the most fundamental
+list, it consists of a pair of two values and can be denoted as: @in-code{( value1 . value2 )}
 
-@code
-( value1 . value2 )
-@end code
-
-And nearly everything in common lisp is represented by these @bold{cons} lists.
+And nearly everything in common lisp is represented by these @verb{cons} lists.
 If you run this function in the lisp repl, you can see how a cons list and a regular list are equal:
 
 @code
@@ -87,19 +83,17 @@ CL-USER> (equal (list :title 'title
                                                           (cons 'ripped '())))))))))
 @end code
 
-Wow! That's a lot to take in isn't it? What is essentially happening in this function is the @bold{list}
+Wow! That's a lot to take in isn't it? What is essentially happening in this function is the @verb{list}
 function is turning the sequence of values into a list. 
 
-The second portion of this comparison is the chain of @bold{conses}. Like I said @ref{earlier},
-a @bold{cons} is a pair of two values
+The second portion of this comparison is the chain of @verb{conses}. Like I said @ref{earlier},
+a @verb{cons} is a pair of two values
 
 Another name for these lists are cons cells.
 
-So if we go back to the list in our first function, @bold{make-cd}, we can be evaluated as such:
+So if we go back to the list in our first function, @verb{make-cd}, we can be evaluated as such: 
+@in-code{(:title . title)}
 
-@code
-((:title . title) .
-@end code
 |#
 (defun add-record (cd)
   "Adds a record to the db" 
