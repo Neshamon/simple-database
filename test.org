@@ -69,7 +69,7 @@ The function =consp= checks if the given value is a cons and returns =T=
 
 Knowing this, it is quite easy to see how everything in Lisp is made up of lists. But where exactly
 does the =cons= list fit in among all these lists? The =cons= list is the most fundamental
-list, it consists of a pair of two values and can be denoted as: |( value1 . value2 )|
+list, it consists of a pair of two values and can be denoted as: ~( value1 . value2 )~
 
 And nearly everything in common lisp is represented by these =cons= lists.
 If you run this function in the lisp repl, you can see how a cons list and a regular list are equal:
@@ -100,7 +100,7 @@ a =cons= is a pair of two values
 Another name for these lists are cons cells.
 
 So if we go back to the list in our first function, =make-cd=, we can be evaluated as such: 
-|(:title . title)|
+~(:title . title)~
 #+BEGIN_SRC lisp
 (defun add-record (cd)
   "Adds a record to the db" 
