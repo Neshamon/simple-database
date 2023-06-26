@@ -1,0 +1,203 @@
+
+
+
+### [Link here](https://gigamonkeys.com/book/practical-a-simple-database.html)
+
+
+#### I will be using SBCL Common Lisp in this article
+
+
+
+
+## Essential Functions
+
+
+
+```lisp
+
+(defun make-cd (title artist rating ripped)
+  "Creates a record"
+  (list :title title :artist artist :rating rating :ripped ripped))
+
+(defvar *db*
+  "Creates a db"
+  nil)
+
+```
+
+
+
+### The Basics
+
+
+The first function `make-cd` is a function that creates records. It takes these values as arguments:
+
+*  `title`
+*  `artist`
+*  `rating`
+*  `ripped`
+
+
+After taking these values the function then creates a list of keywords and the given parameters
+specified above. But you might ask how lisp knows how or even _when_ to do this. To understand this,
+let's take a step back for a moment to understand some fundamentals of Common Lisp.
+
+
+#### The Basics of the Basics
+
+
+The fundamental building block of everything in Lisp is the S-Expression. S-Expressions, or sexprs,
+are the representation of objects within Common Lisp, and anything and everything in Lisp is an object.
+These sexprs can be represented in two main ways, as an `atom` or a basic type of list
+called a `cons`
+
+Now you may be wondering why there are so many parentheses in Common Lisp. The reason why
+is because of the `cons` data structure. Lists in Lisp are delimited by parentheses.
+You can verify this by running this function in a sbcl lisp repl:
+
+
+```lisp
+
+CL-USER> (consp (list :title 'title :artist 'artist :rating 'rating :ripped 'ripped))
+```
+
+The function `consp` checks if the given value is a cons and returns `T`
+(Lisp's version of true) or `nil` (Lisp's false) otherwise.
+
+Knowing this, it is quite easy to see how everything in Lisp is made up of lists. But where exactly
+does the `cons` list fit in among all these lists? The `cons` list is the most fundamental
+list, it consists of a pair of two values and can be denoted as: `( value1 . value2 )`
+
+And nearly everything in common lisp is represented by these `cons` lists.
+If you run this function in the lisp repl, you can see how a cons list and a regular list are equal:
+
+
+```lisp
+
+CL-USER> (equal (list :title 'title 
+                      :artist 'artist 
+                      :rating 'rating 
+                      :ripped 'ripped) 
+                (cons :title 
+                      (cons 'title 
+                            (cons :artist 
+                                  (cons 'artist 
+                                        (cons :rating 
+                                              (cons 'rating 
+                                                    (cons :ripped 
+                                                          (cons 'ripped '())))))))))
+```
+
+Wow! That's a lot to take in isn't it? What is essentially happening in this function is the `list`
+function is turning the sequence of values into a list. 
+
+The second portion of this comparison is the chain of `conses`. Like I said earlier,
+a `cons` is a pair of two values
+
+Another name for these lists are cons cells.
+
+So if we go back to the list in our first function, `make-cd`, we can be evaluated as such: 
+`(:title . title)`
+
+```lisp
+(defun add-record (cd)
+  "Adds a record to the db" 
+  (push cd *db*))
+
+(add-record (make-cd "My first cd" "Me" 4000000 t))
+
+(defun dump-db ()
+  "Pretty prints db info"
+  (dolist (cd *db*)
+    (format t "~{~a:~10t~a~%~}~%" cd)))
+
+(defun prompt-read (prompt)
+  "Prompt read helper function"
+  (format *query-io* "~a: " prompt)
+  (force-output *query-io*)
+  (read-line *query-io*))
+
+(defun prompt-for-cd ()
+  "Creates prompts for user input. Allowing them to
+specify their own records."
+  (make-cd
+   (prompt-read "Title")
+   (prompt-read "Artist")
+   (or (parse-integer (prompt-read "Rating") :junk-allowed t) 0)
+   (y-or-n-p "Ripped [y/n]: ")))
+
+(defun add-cds ()
+  "Adds multiple records to db with user prompts"
+  (loop (add-record (prompt-for-cd))
+        (if (not (y-or-n-p "Another? [y/n]: "))
+            (return))))
+
+(defun save-db (filename)
+  "Saves db to a file by printing the db to the given filename"
+  (with-open-file (out filename
+                       :direction :output
+                       :if-exists :supersede)
+    (with-standard-io-syntax 
+      (print *db* out))))
+
+(defun load-db (filename)
+  "Assigns the stream, input, to db"
+  (with-open-file (input filename)
+    (with-standard-io-syntax 
+      (setf *db* (read input)))))
+
+(defun select (select-fn)
+  "Selects a certain record based off of the selector function, select-p"
+  (remove-if-not select-fn *db*))
+
+(defun where-fn (&key title artist rating (ripped nil ripped-p))
+  "Returns records based off of given parameters if they exist, otherwise returns T"
+  #'(lambda (cd)
+      (and
+       (if title 
+           (equal (getf cd :title) title) 
+           t)
+       (if artist 
+           (equal (getf cd :artist) artist) 
+           t)
+       (if rating 
+           (equal (getf cd :ratizng) rating) 
+           t)
+       (if ripped-p 
+           (equal (getf cd :ripped) ripped)
+           t))))
+
+(defun update (selector-fn &key title artist rating (ripped nil ripped-p))
+  "Updates db based off of selector-fn by mapping the
+ updated row created by the lambda function to the original db"
+  (setf *db* 
+        (mapcar 
+         #'(lambda (row)
+             (when (funcall selector-fn row)
+               (if title
+                   (setf (getf row :title) title))
+               (if artist 
+                   (setf (getf row :artist) artist))
+               (if rating 
+                   (setf (getf row :rating) rating))
+               (if ripped-p
+                   (setf (getf row :ripped) ripped)))
+             row) *db*)))
+
+(defun make-comparison-expr (field value)
+  "Compares the field of cd to the given value"
+  `(equal (getf cd ,field) ,value))
+
+(defun make-comparisons-list (fields)
+  "Compares multiple fields of cd by looping through the fields list 
+and utilizing make-comparison-expr to compare every 2 fields
+and returns an accumulated list"
+  (loop while fields
+        collecting (make-comparison-expr (pop fields) (pop fields))))
+
+(defmacro where (&rest clauses)
+  "Compares all values of the accumulated list returned by make-comparisons-list"
+  `#'(lambda (cd) (and ,@(make-comparisons-list clause)))) ; The ,@ syntax splices values together within a list
+
+
+```
