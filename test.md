@@ -39,7 +39,7 @@ The first function **make-cd** is a function that creates records. It takes thes
 
 
 After taking these values the function then creates a list of keywords and the given parameters
-specified above. But you might ask how lisp knows how or even *when* to do this. To understand this,
+specified above. But you might ask how lisp knows how or even _when_ to do this. To understand this,
 let's take a step back for a moment to understand some fundamentals of Common Lisp.
 
 
