@@ -46,7 +46,7 @@ let's take a step back for a moment to understand some fundamentals of Common Li
 @subsubsubsection The Basics of the Basics
 
 The fundamental building block of everything in Lisp is the S-Expression. S-Expressions, or sexprs,
-are the representation of objects within Common Lisp, and anything and everything in Lisp is an object.
+are the representation of objects within Common Lisp; Any and everything in Lisp is an object.
 These sexprs can be represented in two main ways, as an @verb{atom} or a basic type of list
 called a @verb{cons}
 
@@ -58,14 +58,14 @@ You can verify this by running this function in a sbcl lisp repl:
 CL-USER> (consp (list :title 'title :artist 'artist :rating 'rating :ripped 'ripped))
 @end code
 
-The function @verb{consp} checks if the given value is a cons and returns @verb{T}
+The function @verb{consp} checks if the given value or sequence is a cons and returns @verb{T}
 (Lisp's version of true) or @verb{nil} (Lisp's false) otherwise.
 
 Knowing this, it is quite easy to see how everything in Lisp is made up of lists. But where exactly
 does the @verb{cons} list fit in among all these lists? The @verb{cons} list is the most fundamental
 list, it consists of a pair of two values and can be denoted as: @in-code{( value1 . value2 )}
 
-And nearly everything in common lisp is represented by these @verb{cons} lists.
+And nearly everything in Common Lisp is represented by these @verb{cons} lists.
 If you run this function in the lisp repl, you can see how a cons list and a regular list are equal:
 
 @code
@@ -86,8 +86,22 @@ CL-USER> (equal (list :title 'title
 Wow! That's a lot to take in isn't it? What is essentially happening in this function is the @verb{list}
 function is turning the sequence of values into a list. 
 
-The second portion of this comparison is the chain of @verb{conses}. Like I said @ref{earlier},
-a @verb{cons} is a pair of two values
+The second portion of this comparison is the chain of @verb{conses}. Like I said earlier,
+a @verb{cons} is @ref{a pair of two values}. This is well represented in this large function
+when you understand how the @verb{cons} function works.
+
+The @verb{cons} function creates a @verb{cons} list by pairing the first argument to the second argument.
+It only takes two arguments. This is why you see me chaining all of them together in order to
+get a coherent list. Even at the last sexpr of the @verb{cons} chain, you can see me pair @verb{'ripped}
+with an empty set of parentheses. This shows that @verb{cons} will always take two arguments and not
+any less.
+
+The third part of this function is at the beginning, where we have our @verb{equal} operator. 
+@verb{Equal} takes two arguments and returns @verb{T} if the two objects are equal and @verb{nil} 
+otherwise.
+
+If you evaluate this function you will see that it returns @verb{T}, meaning that these two lists
+are equal.
 
 Another name for these lists are cons cells.
 
