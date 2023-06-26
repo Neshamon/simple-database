@@ -33,10 +33,10 @@
 
 The first function **make-cd** is a function that creates records. It takes these values as arguments:
 
--  `title`
--  `artist`
--  `rating`
--  `ripped`
+-  : title
+-  : artist
+-  : rating
+-  : ripped
 
 
 After taking these values the function then creates a list of keywords and the given parameters
