@@ -31,12 +31,12 @@
 *** The Basics
 
 
-The first function **make-cd** is a function that creates records. It takes these values as arguments:
+The first function *make-cd* is a function that creates records. It takes these values as arguments:
 
--  : title
--  : artist
--  : rating
--  : ripped
+-  =title=
+-  =artist=
+-  =rating=
+-  =ripped=
 
 
 After taking these values the function then creates a list of keywords and the given parameters
@@ -47,37 +47,37 @@ let's take a step back for a moment to understand some fundamentals of Common Li
 
 The fundamental building block of everything in Lisp is the S-Expression. S-Expressions, or sexprs,
 are the representation of objects within Common Lisp, and anything and everything in Lisp is an object.
-These sexprs can be represented in two main ways, as an **atom** or a basic type of list
-called a **cons**
+These sexprs can be represented in two main ways, as an *atom* or a basic type of list
+called a *cons*
 
 Now you may be wondering why there are so many parentheses in Common Lisp. The reason why
-is because of the **cons** data structure. Lists in Lisp are delimited by parentheses.
+is because of the *cons* data structure. Lists in Lisp are delimited by parentheses.
 You can verify this by running this function in a sbcl lisp repl:
 
 
-```lisp
+#+begin_src lisp
 
 CL-USER> (consp (list :title 'title :artist 'artist :rating 'rating :ripped 'ripped))
-```
+#+end_src
 
-The function **consp** checks if the given value is a cons and returns **T** (Lisp's version of true)
-or **nil** (Lisp's false) otherwise.
+The function *consp* checks if the given value is a cons and returns *T* (Lisp's version of true)
+or *nil* (Lisp's false) otherwise.
 
 Knowing this, it is quite easy to see how everything in Lisp is made up of lists. But where exactly
-does the **cons** list fit in among all these lists? The **cons** list is the most fundamental
+does the *cons* list fit in among all these lists? The *cons* list is the most fundamental
 list, it consists of a pair of two values and can be denoted as: 
 
 
-```lisp
+#+begin_src lisp
 
 ( value1 . value2 )
-```
+#+end_src
 
-And nearly everything in common lisp is represented by these **cons** lists.
+And nearly everything in common lisp is represented by these *cons* lists.
 If you run this function in the lisp repl, you can see how a cons list and a regular list are equal:
 
 
-```lisp
+#+begin_src lisp
 
 CL-USER> (equal (list :title 'title 
                       :artist 'artist 
@@ -91,23 +91,23 @@ CL-USER> (equal (list :title 'title
                                               (cons 'rating 
                                                     (cons :ripped 
                                                           (cons 'ripped '())))))))))
-```
+#+end_src
 
-Wow! That's a lot to take in isn't it? What is essentially happening in this function is the **list**
+Wow! That's a lot to take in isn't it? What is essentially happening in this function is the *list*
 function is turning the sequence of values into a list. 
 
-The second portion of this comparison is the chain of **conses**. Like I said earlier,
-a **cons** is a pair of two values
+The second portion of this comparison is the chain of *conses*. Like I said earlier,
+a *cons* is a pair of two values
 
 Another name for these lists are cons cells.
 
-So if we go back to the list in our first function, **make-cd**, we can be evaluated as such:
+So if we go back to the list in our first function, *make-cd*, we can be evaluated as such:
 
 
-```lisp
+#+begin_src lisp
 
 ((:title . title) .
-```
+#+end_src
 #+BEGIN_SRC lisp
 (defun add-record (cd)
   "Adds a record to the db" 
