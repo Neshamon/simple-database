@@ -3,7 +3,9 @@
 
 ### [Link here](https://gigamonkeys.com/book/practical-a-simple-database.html)
 
-@subsubsubsection I will be using SBCL Common Lisp in this article
+
+#### I will be using SBCL Common Lisp in this article
+
 
 
 
@@ -40,7 +42,9 @@ After taking these values the function then creates a list of keywords and the g
 specified above. But you might ask how lisp knows how or even *when* to do this. To understand this,
 let's take a step back for a moment to understand some fundamentals of Common Lisp.
 
-@subsubsubsection The Basics of the Basics
+
+#### The Basics of the Basics
+
 
 The fundamental building block of everything in Lisp is the S-Expression. S-Expressions, or sexprs,
 are the representation of objects within Common Lisp, and anything and everything in Lisp is an object.

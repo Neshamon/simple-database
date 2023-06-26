@@ -212,4 +212,6 @@ and returns an accumulated list"
 (erudite:erudite #p"~/quicklisp/local-projects/simple-database/test.md" 
                  #p"~/quicklisp/local-projects/simple-database/simple-db.lisp"
                  :output-type :markdown)
+
+(ql:quickload :erudite)
 ;;@end ignore
