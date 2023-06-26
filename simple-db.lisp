@@ -101,9 +101,29 @@ The third part of this function is at the beginning, where we have our @verb{equ
 otherwise.
 
 If you evaluate this function you will see that it returns @verb{T}, meaning that these two lists
-are equal.
+are equal. Isn't that odd? These two lists don't look remotely the same! Not only that,
+Why does the value @verb{equal} at the beginning execute, but the value @verb{:title} or 
+any other value in these lists not execute?
 
-Another name for these lists are cons cells.
+@subsubsubsection Flow of Execution
+
+If Lisp were to have any type of concrete syntax, it would be this.
+Every list in Lisp follows a syntax similar to this:
+
+@code
+(<operator> <arg1> <arg2> ... <argn>)
+@end code
+
+You can see this pattern in every function call to @verb{cons} and in the call to @verb{list}
+as well. Because an operator or function will always be at the beginning of a list, it's one way
+Lisp differentiates between what's a function, variable, data structure, method, or macro.
+
+This enables incredible amounts of flexibility when it comes to writing any program.
+In non-Lisp languages there is usually always a stricter syntax that guides the user
+to program in a specific way. With Lisp, the flexible syntax imposes very few restrictions
+on how you may want to write your program.
+
+@subsubsubsection The make-cd functio
 
 So if we go back to the list in our first function, @verb{make-cd}, we can be evaluated as such: 
 @in-code{(:title . title)}

@@ -98,7 +98,7 @@ when you understand how the `cons` function works.
 The `cons` function creates a `cons` list by pairing the first argument to the second argument.
 It only takes two arguments. This is why you see me chaining all of them together in order to
 get a coherent list. Even at the last sexpr of the `cons` chain, you can see me pair 
-`'ripped` with an empty set of parentheses. This shows that `cons` will 
+`ripped` with an empty set of parentheses. This shows that `cons` will 
 always take two arguments and not any less.
 
 The third part of this function is at the beginning, where we have our `equal` operator. 
@@ -106,9 +106,35 @@ The third part of this function is at the beginning, where we have our `equal` o
 otherwise.
 
 If you evaluate this function you will see that it returns `T`, meaning that these two lists
-are equal.
+are equal. Isn't that odd? These two lists don't look remotely the same! Not only that,
+Why does the value `equal` at the beginning execute, but the value `:title` or 
+any other value in these lists not execute?
 
-Another name for these lists are cons cells.
+
+#### Flow of Execution
+
+
+If Lisp were to have any type of concrete syntax, it would be this.
+Every list in Lisp follows a syntax similar to this:
+
+
+```lisp
+
+(<operator> <arg1> <arg2> ... <argn>)
+```
+
+You can see this pattern in every function call to `cons` and in the call to `list`
+as well. Because an operator or function will always be at the beginning of a list, it's one way
+Lisp differentiates between what's a function, variable, data structure, method, or macro.
+
+This enables incredible amounts of flexibility when it comes to writing any program.
+In non-Lisp languages there is usually always a stricter syntax that guides the user
+to program in a specific way. With Lisp, the flexible syntax imposes very few restrictions
+on how you may want to write your program.
+
+
+#### The make-cd functio
+
 
 So if we go back to the list in our first function, `make-cd`, we can be evaluated as such: 
 `(:title . title)`
