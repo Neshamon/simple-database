@@ -100,9 +100,9 @@ when you understand how the =cons= function works.
 
 The =cons= function creates a =cons= list by pairing the first argument to the second argument.
 It only takes two arguments. This is why you see me chaining all of them together in order to
-get a coherent list. Even at the last sexpr of the =cons= chain, you can see me pair ='ripped=
-with an empty set of parentheses. This shows that =cons= will always take two arguments and not
-any less.
+get a coherent list. Even at the last sexpr of the =cons= chain, you can see me pair 
+~'ripped~ with an empty set of parentheses. This shows that =cons= will 
+always take two arguments and not any less.
 
 The third part of this function is at the beginning, where we have our =equal= operator. 
 =Equal= takes two arguments and returns =T= if the two objects are equal and =nil= 

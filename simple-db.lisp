@@ -92,9 +92,9 @@ when you understand how the @verb{cons} function works.
 
 The @verb{cons} function creates a @verb{cons} list by pairing the first argument to the second argument.
 It only takes two arguments. This is why you see me chaining all of them together in order to
-get a coherent list. Even at the last sexpr of the @verb{cons} chain, you can see me pair @verb{'ripped}
-with an empty set of parentheses. This shows that @verb{cons} will always take two arguments and not
-any less.
+get a coherent list. Even at the last sexpr of the @verb{cons} chain, you can see me pair 
+@in-code{'ripped} with an empty set of parentheses. This shows that @verb{cons} will 
+always take two arguments and not any less.
 
 The third part of this function is at the beginning, where we have our @verb{equal} operator. 
 @verb{Equal} takes two arguments and returns @verb{T} if the two objects are equal and @verb{nil} 
