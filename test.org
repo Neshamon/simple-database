@@ -5,7 +5,7 @@
 
 
 
-*** [[https://gigamonkeys.com/book/practical-a-simple-database.html][Link here]]
+*** [[https://gigamonkeys.com/book/practical-a-simple-database.html][Simple Database Project]]
 
 
 **** I will be using SBCL Common Lisp in this article
@@ -13,7 +13,7 @@
 
 
 
-** Essential Functions
+** Essentials of Lisp
 
 
 #+BEGIN_SRC lisp
@@ -56,7 +56,7 @@ called a =cons=
 
 Now you may be wondering why there are so many parentheses in Common Lisp. The reason why
 is because of the =cons= data structure. Lists in Lisp are delimited by parentheses.
-You can verify this by running this function in a sbcl lisp repl:
+You can verify this by running these functions in a sbcl lisp repl:
 
 
 #+begin_src lisp
@@ -64,10 +64,20 @@ You can verify this by running this function in a sbcl lisp repl:
 CL-USER> (consp (list :title 'title :artist 'artist :rating 'rating :ripped 'ripped))
 #+end_src
 
-The function =consp= checks if the given value or sequence is a cons and returns =T=
-(Lisp's version of true) or =nil= (Lisp's false) otherwise.
 
-Knowing this, it is quite easy to see how everything in Lisp is made up of lists. But where exactly
+#+begin_src lisp
+
+CL-USER> (listp (list :title 'title :artist 'artist :rating 'rating :ripped 'ripped))
+#+end_src
+
+The functions =listp= and =consp= check if the given value or sequence is a list/cons 
+respectively and returns =T= (Lisp's version of true) or =nil= (Lisp's false) otherwise.
+
+These functions also show something else that's important. Even though we tested the same sequence,
+they both returned =T=, meaning that we can know that a =cons= is a =list= and
+a =list= is a =cons=
+
+Knowing this, it's quite easy to see how everything in Lisp is made up of lists. But where exactly
 does the =cons= list fit in among all these lists? The =cons= list is the most fundamental
 list, it consists of a pair of two values and can be denoted as: ~( value1 . value2 )~
 
@@ -99,10 +109,10 @@ a =cons= is a pair of two values. This is well represented in this large functio
 when you understand how the =cons= function works.
 
 The =cons= function creates a =cons= list by pairing the first argument to the second argument.
-It only takes two arguments. This is why you see me chaining all of them together in order to
-get a coherent list. Even at the last sexpr of the =cons= chain, you can see me pair 
-~ripped~ with an empty set of parentheses. This shows that =cons= will 
-always take two arguments and not any less.
+This is why you see me chaining all of them together in order to get a long enough list to fit 8 values.
+Even at the last sexpr of the =cons= chain, you can see me pair ~ripped~ 
+with an empty set of parentheses. This shows that =cons= will always take two arguments
+and not any less.
 
 The third part of this function is at the beginning, where we have our =equal= operator. 
 =Equal= takes two arguments and returns =T= if the two objects are equal and =nil= 
@@ -130,13 +140,75 @@ You can see this pattern in every function call to =cons= and in the call to =li
 as well. Because an operator or function will always be at the beginning of a list, it's one way
 Lisp differentiates between what's a function, variable, data structure, method, or macro.
 
-This enables incredible amounts of flexibility when it comes to writing any program.
-In non-Lisp languages there is usually always a stricter syntax that guides the user
-to program in a specific way. With Lisp, the flexible syntax imposes very few restrictions
-on how you may want to write your program.
+This operator is applied to every argument that comes after it. It's a little difficult to
+understand how the =equal= operater applies to each argument, so let's look at an easier example:
 
 
-**** The make-cd functio
+#+begin_src lisp
+
+(+ 1 2)
+#+end_src
+
+This is simple addition between two integers in Lisp. In the same way we would add 1 to 2 to get
+a sum of three, so would we apply the operator of =equal= to each argument 
+in the previous functions. Another way to look at it would be this way:
+
+
+#+begin_src lisp
+
+(+ 1 2 3 4 5 6 7 8 9)                   ; => 45
+(+ (+ 1 2) (+ 3 4) (+ 5 6) (+ 7 8) 9)   ; => 45
+(+ 3 7 11 15 9)                         ; => 45
+(+ (+ 3 7) (+ 11 15) 9)                 ; => 45
+(+ 10 26 9)                             ; => 45
+(+ (+ 10 26) 9)                         ; => 45
+(+ 36 9)                                ; => 45
+45 ; This is an atom
+#+end_src
+
+When you look at the code above, you can see how the addition operator is applied to its arguments
+in pairs. For every pair of arguments we are performing the operation of addition.
+In the same way in which we perform addtion on the arguments of the addition 
+operator, so would we any other operator. So the equal operator would look something
+like this:
+
+
+
+#+begin_src lisp
+
+(equal (equal 1 (equal 1 (equal 2 "2"))) (equal 1 (equal 1 (equal 2 "2"))))  ; => T
+(equal (equal 1 (equal 1 nil)) (equal 1 (equal 1 nil)))  ; => T
+(equal (equal 1 nil) (equal 1 nil))  ; => T
+(equal nil nil)  ; => T
+T
+#+end_src
+
+Now after looking a little closer at these two functions, wouldn't you say that this looks
+a little familiar? If we refer back to our =cons= list, we would see a similar
+pattern of function calls whether it's the addition operator or the equals operator.
+For addition it would look like:
+
+
+#+begin_src lisp
+
+(+ 1 (+ 2 (+ 3 (+ 4 (+ 5 (+ 6 (+ 7 (+ 8 9))))))))
+;; Or
+(equal (equal 1 (equal 1 (equal 2 "2"))) (equal 1 (equal 1 (equal 2 "2"))))
+#+end_src
+
+If you look closely at these functions and how we structured them,
+you'll notice we presented the same result in multiple ways;
+Every iteration of the addition sexprs were all different ways to say the same thing.
+In spite of our various forms of presenting the same 
+
+This is just one fraction of incredible amount flexibility you get when
+it comes to writing any program in Lisp. In non-Lisp languages there is 
+usually always a stricter syntax that guides the user to program in
+a specific way. With Lisp, the flexible syntax imposes very few restrictions on
+how you may want to write your program.
+
+
+**** The make-cd function
 
 
 So if we go back to the list in our first function, =make-cd=, we can be evaluated as such: 

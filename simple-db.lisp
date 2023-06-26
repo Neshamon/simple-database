@@ -1,13 +1,13 @@
 #|
 
 @title Implementation of Practical Lisp's Simple Database Project
-@subsubsection @link{https://gigamonkeys.com/book/practical-a-simple-database.html}{Link here}
+@subsubsection @link{https://gigamonkeys.com/book/practical-a-simple-database.html}{Simple Database Project}
 @subsubsubsection I will be using SBCL Common Lisp in this article
 
 @author John Matthews
 @syntax erudite
 
-@subsection Essential Functions
+@subsection Essentials of Lisp
 
 @ignore
 |#
@@ -52,16 +52,24 @@ called a @verb{cons}
 
 Now you may be wondering why there are so many parentheses in Common Lisp. The reason why
 is because of the @verb{cons} data structure. Lists in Lisp are delimited by parentheses.
-You can verify this by running this function in a sbcl lisp repl:
+You can verify this by running these functions in a sbcl lisp repl:
 
 @code
 CL-USER> (consp (list :title 'title :artist 'artist :rating 'rating :ripped 'ripped))
 @end code
 
-The function @verb{consp} checks if the given value or sequence is a cons and returns @verb{T}
-(Lisp's version of true) or @verb{nil} (Lisp's false) otherwise.
+@code
+CL-USER> (listp (list :title 'title :artist 'artist :rating 'rating :ripped 'ripped))
+@end code
 
-Knowing this, it is quite easy to see how everything in Lisp is made up of lists. But where exactly
+The functions @verb{listp} and @verb{consp} check if the given value or sequence is a list/cons 
+respectively and returns @verb{T} (Lisp's version of true) or @verb{nil} (Lisp's false) otherwise.
+
+These functions also show something else that's important. Even though we tested the same sequence,
+they both returned @verb{T}, meaning that we can know that a @verb{cons} is a @verb{list} and
+a @verb{list} is a @verb{cons}
+
+Knowing this, it's quite easy to see how everything in Lisp is made up of lists. But where exactly
 does the @verb{cons} list fit in among all these lists? The @verb{cons} list is the most fundamental
 list, it consists of a pair of two values and can be denoted as: @in-code{( value1 . value2 )}
 
@@ -91,10 +99,10 @@ a @verb{cons} is @ref{a pair of two values}. This is well represented in this la
 when you understand how the @verb{cons} function works.
 
 The @verb{cons} function creates a @verb{cons} list by pairing the first argument to the second argument.
-It only takes two arguments. This is why you see me chaining all of them together in order to
-get a coherent list. Even at the last sexpr of the @verb{cons} chain, you can see me pair 
-@in-code{ripped} with an empty set of parentheses. This shows that @verb{cons} will 
-always take two arguments and not any less.
+This is why you see me chaining all of them together in order to get a long enough list to fit 8 values.
+Even at the last sexpr of the @verb{cons} chain, you can see me pair @in-code{ripped} 
+with an empty set of parentheses. This shows that @verb{cons} will always take two arguments
+and not any less.
 
 The third part of this function is at the beginning, where we have our @verb{equal} operator. 
 @verb{Equal} takes two arguments and returns @verb{T} if the two objects are equal and @verb{nil} 
@@ -118,12 +126,69 @@ You can see this pattern in every function call to @verb{cons} and in the call t
 as well. Because an operator or function will always be at the beginning of a list, it's one way
 Lisp differentiates between what's a function, variable, data structure, method, or macro.
 
-This enables incredible amounts of flexibility when it comes to writing any program.
-In non-Lisp languages there is usually always a stricter syntax that guides the user
-to program in a specific way. With Lisp, the flexible syntax imposes very few restrictions
-on how you may want to write your program.
+This operator is applied to every argument that comes after it. It's a little difficult to
+understand how the @verb{equal} operater applies to each argument, so let's look at an easier example:
 
-@subsubsubsection The make-cd functio
+@code
+(+ 1 2)
+@end code
+
+This is simple addition between two integers in Lisp. In the same way we would add 1 to 2 to get
+a sum of three, so would we apply the operator of @verb{equal} to each argument 
+in the previous functions. Another way to look at it would be this way:
+
+@code
+(+ 1 2 3 4 5 6 7 8 9)                   ; => 45
+(+ (+ 1 2) (+ 3 4) (+ 5 6) (+ 7 8) 9)   ; => 45
+(+ 3 7 11 15 9)                         ; => 45
+(+ (+ 3 7) (+ 11 15) 9)                 ; => 45
+(+ 10 26 9)                             ; => 45
+(+ (+ 10 26) 9)                         ; => 45
+(+ 36 9)                                ; => 45
+45 ; This is an atom
+@end code
+
+When you look at the code above, you can see how the addition operator is applied to its arguments
+in pairs. For every pair of arguments we are performing the operation of addition.
+In the same way in which we perform addtion on the arguments of the addition 
+operator, so would we any other operator. So the equal operator would look something
+like this:
+
+@ignore
+I need to revise the equal example....
+@end ignore
+
+@code
+(equal (equal 1 (equal 1 (equal 2 "2"))) (equal 1 (equal 1 (equal 2 "2"))))  ; => T
+(equal (equal 1 (equal 1 nil)) (equal 1 (equal 1 nil)))  ; => T
+(equal (equal 1 nil) (equal 1 nil))  ; => T
+(equal nil nil)  ; => T
+T
+@end code
+
+Now after looking a little closer at these two functions, wouldn't you say that this looks
+a little familiar? If we refer back to our @verb{cons} list, we would see a similar
+pattern of function calls whether it's the addition operator or the equals operator.
+For addition it would look like:
+
+@code
+(+ 1 (+ 2 (+ 3 (+ 4 (+ 5 (+ 6 (+ 7 (+ 8 9))))))))
+;; Or
+(equal (equal 1 (equal 1 (equal 2 "2"))) (equal 1 (equal 1 (equal 2 "2"))))
+@end code
+
+If you look closely at these functions and how we structured them,
+you'll notice we presented the same result in multiple ways;
+Every iteration of the addition sexprs were all different ways to say the same thing.
+In spite of our various forms of presenting the same 
+
+This is just one fraction of incredible amount flexibility you get when
+it comes to writing any program in Lisp. In non-Lisp languages there is 
+usually always a stricter syntax that guides the user to program in
+a specific way. With Lisp, the flexible syntax imposes very few restrictions on
+how you may want to write your program.
+
+@subsubsubsection The make-cd function
 
 So if we go back to the list in our first function, @verb{make-cd}, we can be evaluated as such: 
 @in-code{(:title . title)}
