@@ -1,3 +1,8 @@
+(defpackage #:simple-db
+  (:use :cl :mgl-pax))
+
+(in-package :simple-db)
+
 #|
 
 @title Implementation of Practical Lisp's Simple Database Project
@@ -12,7 +17,7 @@
 @ignore
 |#
 
-(ql:quickload :erudite)
+(ql:quickload :mgl-pax)
 
 #|
 @end ignore
@@ -26,6 +31,24 @@
 (defvar *db*
   "Creates a db"
   nil)
+
+(defsection @the-basics (:title "The Basics")
+  "The first function is a function that creates records.
+It takes these values as arguments:
+
+- title
+- artist
+- rating
+- ripped
+
+After taking these values the function then creates a list of keywords and the given parameters
+specified above. But you might ask how Lisp knows how or even when to do this. To understand this,
+let's take a step back to look at some fundamentals of Common Lisp")
+
+(document @the-basics 
+          :stream "/home/neshamon/quicklisp/local-projects/simple-database/test2.md"
+          :format :markdown)
+
 
 #|
 
@@ -78,17 +101,17 @@ If you run this function in the lisp repl, you can see how a cons list and a reg
 
 @code
 CL-USER> (equal (list :title 'title 
-                      :artist 'artist 
-                      :rating 'rating 
-                      :ripped 'ripped) 
-                (cons :title 
-                      (cons 'title 
-                            (cons :artist 
-                                  (cons 'artist 
-                                        (cons :rating 
-                                              (cons 'rating 
-                                                    (cons :ripped 
-                                                          (cons 'ripped '())))))))))
+:artist 'artist 
+:rating 'rating 
+:ripped 'ripped) 
+(cons :title 
+(cons 'title 
+(cons :artist 
+(cons 'artist 
+(cons :rating 
+(cons 'rating 
+(cons :ripped 
+(cons 'ripped '())))))))))
 @end code
 
 Wow! That's a lot to take in isn't it? What is essentially happening in this function is the @verb{list}
@@ -193,7 +216,7 @@ Let's go back to our variable @verb{*db*} and let me show you something interest
 (defparameter *db* 33)
 
 (defun *db* (*db*)
-  (+ *db* *db*))
+(+ *db* *db*))
 
 (*db* *db*)
 
