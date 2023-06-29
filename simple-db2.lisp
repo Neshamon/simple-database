@@ -33,7 +33,8 @@
   nil)
 
 (defsection @the-basics (:title "The Basics")
-  "The first function is a function that creates records.
+  """
+The first function is a function that creates records.
 It takes these values as arguments:
 
 - title
@@ -43,28 +44,91 @@ It takes these values as arguments:
 
 After taking these values the function then creates a list of keywords and the given parameters
 specified above. But you might ask how Lisp knows how or even when to do this. To understand this,
-let's take a step back to look at some fundamentals of Common Lisp")
+let's take a step back to look at some fundamentals of Common Lisp
+""")
 
-(document @the-basics 
-          :stream "/home/neshamon/quicklisp/local-projects/simple-database/test2.md"
+(defsection @the-basics-of-the-basics (:title "The Basics of the Basics")
+  """
+The fundamental building block of everything in Lisp is the *S-Expression*. *S-Expressions*, or sexprs,
+are the representation of objects within Common Lisp; Any and everything in Lisp is an object.
+These sexprs can be represented in two main ways, as an `atom` or a basic type of *list*
+called a `cons`
+
+Now you may be wondering why there are so many parentheses in Common Lisp. The reason why
+is because of the `cons` data structure. Lists in Lisp are delimited by parentheses.
+You can verify this by running these functions in a sbcl lisp repl:
+
+``` lisp
+CL-USER> (consp (list :title 'title :artist 'artist :rating 'rating :ripped 'ripped))
+```
+
+``` lisp
+CL-USER> (listp (list :title 'title :artist 'artist :rating 'rating :ripped 'ripped))
+```
+
+The functions `listp` and `consp` check if the given value or sequence is a list/cons 
+respectively and returns `T` (Lisp's version of true) or `nil` (Lisp's false) otherwise.
+
+These functions also show something else that's important. Even though we tested the same sequence,
+they both returned `T`, meaning that we can know that a `cons` is a `list and
+a `list` is a `cons`
+
+Knowing this, it's quite easy to see how everything in Lisp is made up of lists. But where exactly
+does the `cons` list fit in among all these lists? The `cons` list is the most fundamental
+list, it consists of a pair of two values and can be denoted as: @in-code{( value1 . value2 )}
+
+And nearly everything in Common Lisp is represented by these `cons` lists.
+If you run this function in the lisp repl, you can see how a cons list and a regular list are equal:
+
+``` lisp
+CL-USER> (equal (list :title 'title 
+                      :artist 'artist 
+                      :rating 'rating 
+                      :ripped 'ripped) 
+                (cons :title 
+                      (cons 'title 
+                            (cons :artist 
+                                  (cons 'artist 
+                                        (cons :rating 
+                                              (cons 'rating 
+                                                    (cons :ripped 
+                                                          (cons 'ripped '())))))))))
+```
+
+Wow! That's a lot to take in isn't it? What is essentially happening in this function is the `list`
+function is turning the sequence of values into a list. 
+
+The second portion of this comparison is the chain of *conses*. Like I said earlier,
+a `cons` is a pair of two values. This is well represented in this large function
+when you understand how the `cons` function works.
+
+The `cons` function creates a `cons` list by pairing the first argument to the second argument.
+This is why you see me chaining all of them together in order to get a long enough list to fit 8 values.
+Even at the last sexpr of the `cons` chain, you can see me pair `'ripped` 
+with an empty set of parentheses. This shows that `cons` will always take two arguments
+and not any less.
+
+The third part of this function is at the beginning, where we have our `equal` operator. 
+`Equal` takes two arguments and returns `T` if the two objects are equal and `nil`
+otherwise.
+
+If you evaluate this function you will see that it returns `T`, meaning that these two lists
+are equal. Isn't that odd? These two lists don't look remotely the same! Not only that,
+Why does the value `equal` at the beginning execute, but the value `:title` or 
+any other value in these lists not execute?
+"""
+  )
+
+(defsection @essentials-of-lisp (:title "Essentials of Lisp")
+  (@the-basics section)
+  (@the-basics-of-the-basics section))
+
+(document @essentials-of-lisp 
+          :stream "/home/neshamon/quicklisp/local-projects/simple-database/essentials-of-lisp.md"
           :format :markdown)
 
 
 #|
-
-@subsubsection The Basics
-
-The first function @verb{make-cd} is a function that creates records. It takes these values as arguments:
-@list
-@item @verb{title}
-@item @verb{artist}
-@item @verb{rating}
-@item @verb{ripped}
-@end list
-
-After taking these values the function then creates a list of keywords and the given parameters
-specified above. But you might ask how lisp knows how or even @it{when} to do this. To understand this,
-let's take a step back for a moment to understand some fundamentals of Common Lisp.
 
 @subsubsubsection The Basics of the Basics
 
