@@ -7,6 +7,7 @@
 
 - [1 The Basics][3e78]
 - [2 The Basics of the Basics][77a6]
+- [3 Flow of Execution][0fd9]
 
 ###### \[in package SIMPLE-DB\]
 <a id="x-28SIMPLE-DB-3A-40THE-BASICS-20MGL-PAX-3ASECTION-29"></a>
@@ -110,6 +111,78 @@ any other value in these lists not execute?
 
 
 
+<a id="x-28SIMPLE-DB-3A-40FLOW-OF-EXECUTION-20MGL-PAX-3ASECTION-29"></a>
+<a id="SIMPLE-DB:@FLOW-OF-EXECUTION%20MGL-PAX:SECTION"></a>
+
+## 3 Flow of Execution
+
+
+
+If Lisp were to have any type of concrete syntax, it would be this.
+Every list in Lisp follows a syntax similar to this:
+
+@code
+(<operator> <arg1> <arg2> ... <argn>)
+@end code
+
+You can see this pattern in every function call to `cons`([`0`][a237] [`1`][12a8]) and in the call to `list`([`0`][79d8] [`1`][6d9f])
+as well. Because an operator or function will usually always be at the beginning of a list.
+
+This operator is applied to every argument that comes after it. It's a little difficult to
+understand how the [`equal`][3fb5] operater applies to each argument, so let's look at an easier example:
+
+@code
+(+ 1 2)
+@end code
+
+This is simple addition between two integers in Lisp. In the same way we would add 1 to 2 to get
+a sum of three, so would we apply the operator of `equal` to each argument 
+in the previous functions. Another way to look at it would be this way:
+
+@code
+(+ 1 2 3 4 5 6 7 8 9)                   ; => 45
+(+ (+ 1 2) (+ 3 4) (+ 5 6) (+ 7 8) 9)   ; => 45
+(+ 3 7 11 15 9)                         ; => 45
+(+ (+ 3 7) (+ 11 15) 9)                 ; => 45
+(+ 10 26 9)                             ; => 45
+(+ (+ 10 26) 9)                         ; => 45
+(+ 36 9)                                ; => 45
+45 ; This is an atom
+@end code
+
+When you look at the code above, you can see how the addition operator is applied to its arguments
+in pairs. For every pair of arguments we are performing the operation of addition.
+In the same way in which we perform addtion on the arguments of the addition 
+operator, so would we any other operator. So the equal operator would look something
+like this:
+
+```lisp
+(equal (equal 1 (equal 1 (equal 2 "2"))) (equal 1 (equal 1 (equal 2 "2"))))  ; => T
+(equal (equal 1 (equal 1 nil)) (equal 1 (equal 1 nil)))  ; => T
+(equal (equal 1 nil) (equal 1 nil))  ; => T
+(equal nil nil)  ; => T
+T
+```
+
+Now after looking a little closer at these two functions, wouldn't you say that this looks
+a little familiar? If we refer back to our `cons` list, we would see a similar
+pattern of function calls whether it's the addition operator or the equals operator.
+For addition it would look like:
+
+```lisp
+(+ 1 (+ 2 (+ 3 (+ 4 (+ 5 (+ 6 (+ 7 (+ 8 9))))))))
+;; Or
+(equal (equal 1 (equal 1 (equal 2 "2"))) (equal 1 (equal 1 (equal 2 "2"))))
+```
+
+If you look closely at these functions and how we structured them,
+you'll notice we presented the same result in multiple ways;
+Every iteration of the addition sexprs were all different ways to say the same thing.
+But what if I told you this phenomena was going on in more ways than one?
+
+
+
+  [0fd9]: #SIMPLE-DB:@FLOW-OF-EXECUTION%20MGL-PAX:SECTION "Flow of Execution"
   [12a8]: http://www.lispworks.com/documentation/HyperSpec/Body/f_cons.htm "CONS (MGL-PAX:CLHS FUNCTION)"
   [3e78]: #SIMPLE-DB:@THE-BASICS%20MGL-PAX:SECTION "The Basics"
   [3fb5]: http://www.lispworks.com/documentation/HyperSpec/Body/f_equal.htm "EQUAL (MGL-PAX:CLHS FUNCTION)"
@@ -117,6 +190,7 @@ any other value in these lists not execute?
   [6d19]: http://www.lispworks.com/documentation/HyperSpec/Body/f_consp.htm "CONSP (MGL-PAX:CLHS FUNCTION)"
   [6d9f]: http://www.lispworks.com/documentation/HyperSpec/Body/f_list_.htm "LIST (MGL-PAX:CLHS FUNCTION)"
   [77a6]: #SIMPLE-DB:@THE-BASICS-OF-THE-BASICS%20MGL-PAX:SECTION "The Basics of the Basics"
+  [79d8]: http://www.lispworks.com/documentation/HyperSpec/Body/t_list.htm "LIST (MGL-PAX:CLHS CLASS)"
   [a237]: http://www.lispworks.com/documentation/HyperSpec/Body/t_cons.htm "CONS (MGL-PAX:CLHS CLASS)"
   [a657]: http://www.lispworks.com/documentation/HyperSpec/Body/t_atom.htm "ATOM (MGL-PAX:CLHS TYPE)"
   [fefd]: http://www.lispworks.com/documentation/HyperSpec/Body/f_listp.htm "LISTP (MGL-PAX:CLHS FUNCTION)"

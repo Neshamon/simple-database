@@ -70,12 +70,12 @@ The functions `listp` and `consp` check if the given value or sequence is a list
 respectively and returns `T` (Lisp's version of true) or `nil` (Lisp's false) otherwise.
 
 These functions also show something else that's important. Even though we tested the same sequence,
-they both returned `T`, meaning that we can know that a `cons` is a `list and
+they both returned `T`, meaning that we can know that a `cons` is a `list` and
 a `list` is a `cons`
 
 Knowing this, it's quite easy to see how everything in Lisp is made up of lists. But where exactly
 does the `cons` list fit in among all these lists? The `cons` list is the most fundamental
-list, it consists of a pair of two values and can be denoted as: @in-code{( value1 . value2 )}
+list, it consists of a pair of two values and can be denoted as: `( value1 . value2 )`
 
 And nearly everything in Common Lisp is represented by these `cons` lists.
 If you run this function in the lisp repl, you can see how a cons list and a regular list are equal:
@@ -116,12 +116,77 @@ If you evaluate this function you will see that it returns `T`, meaning that the
 are equal. Isn't that odd? These two lists don't look remotely the same! Not only that,
 Why does the value `equal` at the beginning execute, but the value `:title` or 
 any other value in these lists not execute?
-"""
-  )
+""")
+
+(defsection @flow-of-execution (:title "Flow of Execution")
+  """
+If Lisp were to have any type of concrete syntax, it would be this.
+Every list in Lisp follows a syntax similar to this:
+
+@code
+(<operator> <arg1> <arg2> ... <argn>)
+@end code
+
+You can see this pattern in every function call to `cons` and in the call to `list`
+as well. Because an operator or function will usually always be at the beginning of a list.
+
+This operator is applied to every argument that comes after it. It's a little difficult to
+understand how the `equal` operater applies to each argument, so let's look at an easier example:
+
+@code
+(+ 1 2)
+@end code
+
+This is simple addition between two integers in Lisp. In the same way we would add 1 to 2 to get
+a sum of three, so would we apply the operator of `equal` to each argument 
+in the previous functions. Another way to look at it would be this way:
+
+@code
+(+ 1 2 3 4 5 6 7 8 9)                   ; => 45
+(+ (+ 1 2) (+ 3 4) (+ 5 6) (+ 7 8) 9)   ; => 45
+(+ 3 7 11 15 9)                         ; => 45
+(+ (+ 3 7) (+ 11 15) 9)                 ; => 45
+(+ 10 26 9)                             ; => 45
+(+ (+ 10 26) 9)                         ; => 45
+(+ 36 9)                                ; => 45
+45 ; This is an atom
+@end code
+
+When you look at the code above, you can see how the addition operator is applied to its arguments
+in pairs. For every pair of arguments we are performing the operation of addition.
+In the same way in which we perform addtion on the arguments of the addition 
+operator, so would we any other operator. So the equal operator would look something
+like this:
+
+``` lisp
+(equal (equal 1 (equal 1 (equal 2 \"2\"))) (equal 1 (equal 1 (equal 2 \"2\"))))  ; => T
+(equal (equal 1 (equal 1 nil)) (equal 1 (equal 1 nil)))  ; => T
+(equal (equal 1 nil) (equal 1 nil))  ; => T
+(equal nil nil)  ; => T
+T
+```
+
+Now after looking a little closer at these two functions, wouldn't you say that this looks
+a little familiar? If we refer back to our `cons` list, we would see a similar
+pattern of function calls whether it's the addition operator or the equals operator.
+For addition it would look like:
+
+``` lisp
+(+ 1 (+ 2 (+ 3 (+ 4 (+ 5 (+ 6 (+ 7 (+ 8 9))))))))
+;; Or
+(equal (equal 1 (equal 1 (equal 2 \"2\"))) (equal 1 (equal 1 (equal 2 \"2\"))))
+```
+
+If you look closely at these functions and how we structured them,
+you'll notice we presented the same result in multiple ways;
+Every iteration of the addition sexprs were all different ways to say the same thing.
+But what if I told you this phenomena was going on in more ways than one?
+""")
 
 (defsection @essentials-of-lisp (:title "Essentials of Lisp")
   (@the-basics section)
-  (@the-basics-of-the-basics section))
+  (@the-basics-of-the-basics section)
+  (@flow-of-execution section))
 
 (document @essentials-of-lisp 
           :stream "/home/neshamon/quicklisp/local-projects/simple-database/essentials-of-lisp.md"
