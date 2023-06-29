@@ -62,12 +62,12 @@ The functions [`listp`][fefd] and [`consp`][6d19] check if the given value or se
 respectively and returns `T` (Lisp's version of true) or `nil` (Lisp's false) otherwise.
 
 These functions also show something else that's important. Even though we tested the same sequence,
-they both returned `T`, meaning that we can know that a `cons` is a `list and
-a`list`is a`cons\`
+they both returned `T`, meaning that we can know that a `cons` is a `list`([`0`][79d8] [`1`][6d9f]) and
+a `list` is a `cons`
 
 Knowing this, it's quite easy to see how everything in Lisp is made up of lists. But where exactly
 does the `cons` list fit in among all these lists? The `cons` list is the most fundamental
-list, it consists of a pair of two values and can be denoted as: @in-code{( value1 . value2 )}
+list, it consists of a pair of two values and can be denoted as: `( value1 . value2 )`
 
 And nearly everything in Common Lisp is represented by these `cons` lists.
 If you run this function in the lisp repl, you can see how a cons list and a regular list are equal:
@@ -121,9 +121,9 @@ any other value in these lists not execute?
 If Lisp were to have any type of concrete syntax, it would be this.
 Every list in Lisp follows a syntax similar to this:
 
-@code
+```lisp
 (<operator> <arg1> <arg2> ... <argn>)
-@end code
+```
 
 You can see this pattern in every function call to `cons`([`0`][a237] [`1`][12a8]) and in the call to `list`([`0`][79d8] [`1`][6d9f])
 as well. Because an operator or function will usually always be at the beginning of a list.
@@ -131,15 +131,15 @@ as well. Because an operator or function will usually always be at the beginning
 This operator is applied to every argument that comes after it. It's a little difficult to
 understand how the [`equal`][3fb5] operater applies to each argument, so let's look at an easier example:
 
-@code
+```lisp
 (+ 1 2)
-@end code
+```
 
 This is simple addition between two integers in Lisp. In the same way we would add 1 to 2 to get
 a sum of three, so would we apply the operator of `equal` to each argument 
 in the previous functions. Another way to look at it would be this way:
 
-@code
+```lisp
 (+ 1 2 3 4 5 6 7 8 9)                   ; => 45
 (+ (+ 1 2) (+ 3 4) (+ 5 6) (+ 7 8) 9)   ; => 45
 (+ 3 7 11 15 9)                         ; => 45
@@ -148,7 +148,7 @@ in the previous functions. Another way to look at it would be this way:
 (+ (+ 10 26) 9)                         ; => 45
 (+ 36 9)                                ; => 45
 45 ; This is an atom
-@end code
+```
 
 When you look at the code above, you can see how the addition operator is applied to its arguments
 in pairs. For every pair of arguments we are performing the operation of addition.
