@@ -191,7 +191,7 @@ Let's go back to our variable `\*db\*` and let me show you something interesting
 (defparameter \*db\* 33)
 
 (defun \*db\* (\*db\*)
-(+ \*db\* \*db\*))
+  (+ \*db\* \*db\*))
 
 (\*db\* \*db\*)
 
