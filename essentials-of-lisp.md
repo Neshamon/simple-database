@@ -196,7 +196,7 @@ Let's go back to our variable `*db*` and let me show you something interesting:
 (defparameter *db* 33)
 
 (defun *db* (*db*)
-(+ *db* *db*))
+  (+ *db* *db*))
 
 (*db* *db*)
 
@@ -212,7 +212,7 @@ After that a function also with the name of `*db*`. . . Wait what? How can a fun
 share the name of `*db*` with a variable simultaneously? This is because of a data type
 called a symbol
 
-As we discussed before, everything in Common Lisp is made up of @bold{Sexprs}, which represent objects.
+As we discussed before, everything in Common Lisp is made up of **Sexprs**, which represent objects.
 We also know that these Sexprs can either be categorized as atoms or cons cells/lists/singly linked
 lists. But there is one more fundamental representation we ought to talk about, and it's a [`symbol`][e5af]
 
