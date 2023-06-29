@@ -30,7 +30,7 @@ It takes these values as arguments:
 - ripped
 
 After taking these values the function then creates a list of keywords and the given parameters
-specified above. But you might ask how Lisp knows how or even when to do this. To understand this,
+specified above. But you might ask how Lisp knows how or even *when* to do this. To understand this,
 let's take a step back to look at some fundamentals of Common Lisp
 
 
