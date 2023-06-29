@@ -192,7 +192,7 @@ But what if I told you this phenomena was going on in more ways than one?
 
 Let's go back to our variable `*db*` and let me show you something interesting:
 
-@code
+```lisp
 (defparameter *db* 33)
 
 (defun *db* (*db*)
@@ -201,7 +201,7 @@ Let's go back to our variable `*db*` and let me show you something interesting:
 (*db* *db*)
 
 (function-lambda-expression (symbol-function '*db*))
-@end code
+```
 
 After looking at this code, do you think something like this would work?
 Or is the lisp repl just going to throw errors at us concerning names?
