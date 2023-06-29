@@ -8,6 +8,7 @@
 - [1 The Basics][3e78]
 - [2 The Basics of the Basics][77a6]
 - [3 Flow of Execution][0fd9]
+- [4 Symbols][b896]
 
 ###### \[in package SIMPLE-DB\]
 <a id="x-28SIMPLE-DB-3A-40THE-BASICS-20MGL-PAX-3ASECTION-29"></a>
@@ -182,6 +183,50 @@ But what if I told you this phenomena was going on in more ways than one?
 
 
 
+<a id="x-28SIMPLE-DB-3A-40SYMBOLS-20MGL-PAX-3ASECTION-29"></a>
+<a id="SIMPLE-DB:@SYMBOLS%20MGL-PAX:SECTION"></a>
+
+## 4 Symbols
+
+
+
+Let's go back to our variable `*db*` and let me show you something interesting:
+
+@code
+(defparameter *db* 33)
+
+(defun *db* (*db*)
+(+ *db* *db*))
+
+(*db* *db*)
+
+(function-lambda-expression (symbol-function '*db*))
+@end code
+
+After looking at this code, do you think something like this would work?
+Or is the lisp repl just going to throw errors at us concerning names?
+Well if you guessed that it would work, then you'd be correct
+
+What's going on is that a global variable called `*db*` is created with the value of 33.
+After that a function also with the name of `*db*`. . . Wait what? How can a function
+share the name of `*db*` with a variable simultaneously? This is because of a data type
+called a symbol
+
+As we discussed before, everything in Common Lisp is made up of @bold{Sexprs}, which represent objects.
+We also know that these Sexprs can either be categorized as atoms or cons cells/lists/singly linked
+lists. But there is one more fundamental representation we ought to talk about, and it's a [`symbol`][e5af]
+
+In Algol-based languages (Languages like C), the primitive or composite data type is typically a
+string literal
+
+This is just one fraction of incredible amount flexibility you get when
+it comes to writing any program in Lisp. In non-Lisp languages there is 
+usually always a stricter syntax that guides the user to program in
+a specific way. With Lisp, the flexible syntax imposes very few restrictions on
+how you may want to write your program.
+
+
+
   [0fd9]: #SIMPLE-DB:@FLOW-OF-EXECUTION%20MGL-PAX:SECTION "Flow of Execution"
   [12a8]: http://www.lispworks.com/documentation/HyperSpec/Body/f_cons.htm "CONS (MGL-PAX:CLHS FUNCTION)"
   [3e78]: #SIMPLE-DB:@THE-BASICS%20MGL-PAX:SECTION "The Basics"
@@ -193,4 +238,6 @@ But what if I told you this phenomena was going on in more ways than one?
   [79d8]: http://www.lispworks.com/documentation/HyperSpec/Body/t_list.htm "LIST (MGL-PAX:CLHS CLASS)"
   [a237]: http://www.lispworks.com/documentation/HyperSpec/Body/t_cons.htm "CONS (MGL-PAX:CLHS CLASS)"
   [a657]: http://www.lispworks.com/documentation/HyperSpec/Body/t_atom.htm "ATOM (MGL-PAX:CLHS TYPE)"
+  [b896]: #SIMPLE-DB:@SYMBOLS%20MGL-PAX:SECTION "Symbols"
+  [e5af]: http://www.lispworks.com/documentation/HyperSpec/Body/t_symbol.htm "SYMBOL (MGL-PAX:CLHS CLASS)"
   [fefd]: http://www.lispworks.com/documentation/HyperSpec/Body/f_listp.htm "LISTP (MGL-PAX:CLHS FUNCTION)"
