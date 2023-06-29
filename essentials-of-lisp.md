@@ -11,6 +11,18 @@
 - [4 Symbols][b896]
 
 ###### \[in package SIMPLE-DB\]
+<a id="x-28SIMPLE-DB-3AMAKE-CD-20FUNCTION-29"></a>
+<a id="SIMPLE-DB:MAKE-CD%20FUNCTION"></a>
+
+- [function] **MAKE-CD** *TITLE ARTIST RATING RIPPED*
+
+    Creates a record
+
+<a id="x-28SIMPLE-DB-3A-2ADB-2A-20VARIABLE-29"></a>
+<a id="SIMPLE-DB:*DB*%20VARIABLE"></a>
+
+- [variable] **\*DB\*** *"Creates a db"*
+
 <a id="x-28SIMPLE-DB-3A-40THE-BASICS-20MGL-PAX-3ASECTION-29"></a>
 <a id="SIMPLE-DB:@THE-BASICS%20MGL-PAX:SECTION"></a>
 
@@ -190,7 +202,7 @@ But what if I told you this phenomena was going on in more ways than one?
 
 
 
-Let's go back to our variable `*db*` and let me show you something interesting:
+Let's go back to our variable [`*db*`][4363] and let me show you something interesting:
 
 ```lisp
 (defparameter *db* 33)
@@ -231,6 +243,7 @@ how you may want to write your program.
   [12a8]: http://www.lispworks.com/documentation/HyperSpec/Body/f_cons.htm "CONS (MGL-PAX:CLHS FUNCTION)"
   [3e78]: #SIMPLE-DB:@THE-BASICS%20MGL-PAX:SECTION "The Basics"
   [3fb5]: http://www.lispworks.com/documentation/HyperSpec/Body/f_equal.htm "EQUAL (MGL-PAX:CLHS FUNCTION)"
+  [4363]: #SIMPLE-DB:*DB*%20VARIABLE "SIMPLE-DB:*DB* VARIABLE"
   [5152]: http://www.lispworks.com/documentation/HyperSpec/Body/f_atom.htm "ATOM (MGL-PAX:CLHS FUNCTION)"
   [6d19]: http://www.lispworks.com/documentation/HyperSpec/Body/f_consp.htm "CONSP (MGL-PAX:CLHS FUNCTION)"
   [6d9f]: http://www.lispworks.com/documentation/HyperSpec/Body/f_list_.htm "LIST (MGL-PAX:CLHS FUNCTION)"
